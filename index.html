@@ -14,27 +14,72 @@
       font-family: Arial, sans-serif;
       color: rgb(0, 0, 0);
       text-align: center;
-      padding-top: 70px;
+      padding: 20px;
+      margin: 0;
     }
 
+  .container {
+    position: relative;
+    background-color: #ffffff;
+    width: 90%;
+    max-width: 500px;
+    aspect-ratio: 1 / 1;     /* quadrado */
+    padding: 20px;
+    border-radius: 25px;
+    margin: 40px auto;       /* margem só em cima/baixo */
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly; /* distribui espaço de forma equilibrada */
+    align-items: center;
+  }
+
+
+
+
+    #imagem-dia {
+      max-width: 100%;       /* ocupa até o limite do container */
+      height: auto;
+      border-radius: 15px;
+      margin-top: 10px;
+    }
+
+    h1 {
+      font-size: 2em;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 1em;
+      margin: 5px 0;
+    }
+
+    /* Ajustes para tablets e celulares */
     @media (max-width: 768px) {
       body {
-        font-size: 35px;
-        padding-top: 50px;
+        font-size: 18px;
+        padding-top: 10px;
+      }
+
+      h1 {
+        font-size: 1.5em;
       }
     }
 
-    .container {
-      position: relative;
-      top: 40px;
-      background-color: rgb(255, 255, 255);
-      width: 400px;
-      height: 300px;
-      padding-top: 20px;
-      border-radius: 25px;
-      margin: 0 auto;
-    }
+    @media (max-width: 480px) {
+      .container {
+        width: 100%;
+        padding: 15px;
+      }
 
+      h1 {
+        font-size: 1.2em;
+      }
+
+      p {
+        font-size: 0.9em;
+      }
+    }
     #frase {
       color: rgb(53, 53, 53);
       position: relative;
