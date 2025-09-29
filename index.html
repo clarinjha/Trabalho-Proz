@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Aplicativo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#00008B">
+
+  <style>
+    body {
+      transition: background-color 1s;
+      font-family: Arial, sans-serif;
+      color: rgb(0, 0, 0);
+      text-align: center;
+      padding-top: 70px;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        font-size: 35px;
+        padding-top: 50px;
+      }
+    }
+
+    .container {
+      position: relative;
+      top: 40px;
+      background-color: rgb(255, 255, 255);
+      width: 400px;
+      height: 300px;
+      padding-top: 20px;
+      border-radius: 25px;
+      margin: 0 auto;
+    }
+
+    #frase {
+      color: rgb(53, 53, 53);
+      position: relative;
+      top: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 id="titulo">Bem-Vindo(a)!</h1>
+    <p id="hora"></p>
+    <p id="data"></p>
+    <p id="diaTipo"></p>
+    <p id="frase"></p>
+  </div>
+
+    <script>
+        let frases = []; // variável global para guardar as frases do período
+
+        function atualizar() {
+        let cor;
+        let mensagem;
+        let tipoDia;
+
+        const agora = new Date();
+        const hora = agora.getHours();
+        const minutos = agora.getMinutes().toString().padStart(2, "0");
+        const segundos = agora.getSeconds().toString().padStart(2, "0");
+        const opcoes = {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        };
+        const dataFormatada = agora.toLocaleDateString('pt-BR', opcoes);
+        const diaSemana = agora.getDay();
+
+        if (hora >= 6 && hora < 12) {
+            cor = "#FFD700";
+            mensagem = "Bom dia! ☕";
+            frases = [
+            "Que hoje seja leve e cheio de boas energias.",
+            "Um novo dia, uma nova chance de recomeçar.",
+            "Gratidão transforma qualquer manhã em luz."
+            ];
+
+        } else if (hora >= 12 && hora < 18) {
+            cor = "#FF8C00";
+            mensagem = "Boa tarde! ☀️";
+            frases = [
+            "A tarde é perfeita para renovar as forças.",
+            "Continue firme, o melhor ainda está por vir.",
+            "Pausa, respira e segue em frente."
+            ];
+
+        } else if (hora >= 18 && hora < 23) {
+            cor = "#00008B";
+            mensagem = "Boa noite! 🌙";
+            frases = [
+            "Que a paz da noite acalme o coração.",
+            "O descanso também faz parte da vitória.",
+            "Boa noite, amanhã é mais uma oportunidade."
+            ];
+
+        } else {
+            cor = "#2F4F4F";
+            mensagem = "Hora de descansar!💤";
+            frases = [
+            "Madrugada é silêncio que inspira pensamentos profundos.",
+            "Nem sempre insônia é ruim, às vezes é a mente pedindo espaço.",
+            "Que a madrugada leve embora as preocupações do dia."
+            ];
+        }
+
+        // Verifica o tipo de dia
+        if (diaSemana === 0 || diaSemana === 6) {
+            tipoDia = "Hoje é fim de semana! Aproveite pra descansar.";
+        } else {
+            tipoDia = "Hoje é dia útil, foco nas atividades!";
+        }
+
+        // Atualiza a interface
+        document.body.style.backgroundColor = cor;
+        document.getElementById("titulo").innerHTML = mensagem;
+        document.getElementById("hora").innerHTML = "Agora são " + hora + ":" + minutos + ":" + segundos;
+        document.getElementById("data").innerHTML = dataFormatada;
+        document.getElementById("diaTipo").innerHTML = tipoDia;
+
+        trocarFrase(); // Sempre mostra uma frase quando atualiza
+        }
+
+        function trocarFrase() {
+        if (frases.length > 0) {
+            const fraseAleatoria = frases[Math.floor(Math.random() * frases.length)];
+            document.getElementById("frase").innerHTML = fraseAleatoria;
+        }
+        }
+
+        atualizar();
+        setInterval(atualizar, 1000); // Atualiza o relógio e contexto a cada 1s
+        setInterval(trocarFrase, 5000); // Troca a frase a cada 5s
+    </script>
+
+    <script>
+    if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("service-worker.js")
+        .then(() => console.log("Service Worker registrado"))
+        .catch(err => console.log("Erro no SW:", err));
+    }
+    </script>
+
+</body>
+</html>
